@@ -1,4 +1,4 @@
-package com.nick.jpa.dev;
+/*package com.nick.jpa.dev;
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -45,3 +45,4 @@ public class DevDBConfig {
                 .build();
     }
 }
+*/

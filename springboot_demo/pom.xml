@@ -3,26 +3,26 @@
   <groupId>nick.private</groupId>
   <artifactId>springboot_demo</artifactId>
   <version>1.0-SNAPSHOT</version>
-  
+
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.5.RELEASE</version>
+    <version>2.0.3.RELEASE</version>
   </parent>
-  
+
   <dependencies>
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-    <dependency>
+    <!--<dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-test</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -34,7 +34,7 @@
       <version>1.16.20</version>
     </dependency>
   </dependencies>
-  
+
   <build>
     <plugins>
       <plugin>
@@ -44,7 +44,6 @@
           <target>1.8</target>
         </configuration>
       </plugin>
-      
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
