@@ -1,0 +1,8 @@
+SPRINGBOOT DEMO
+
+application.title: ${application.title}
+application.version: ${application.version}
+${Ansi.RED} spring-boot.version: ${spring-boot.version}
+Ansi.NAME: ${Ansi.RED}
+AnsiBackground.NAME: ${AnsiBackground.NAME}
+AnsiStyle.NAME: ${AnsiStyle.NAME}

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: springboot_demo
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:54322/ge_apm
+    username: postgres
+    password: root
+  server:
+    port: 9000
+
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob.non_contextual_creation: true
+
+  autoconfigure:
+    exclude:

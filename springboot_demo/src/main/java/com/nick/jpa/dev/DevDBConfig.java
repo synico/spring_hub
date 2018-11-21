@@ -1,6 +1,6 @@
 package com.nick.jpa.dev;
 
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -11,12 +11,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
-@Configuration
-@EnableJpaRepositories(entityManagerFactoryRef = "devEntityManagerFactory",
-        transactionManagerRef = "devTransactionManager")
+//@Configuration
+//@EnableJpaRepositories(entityManagerFactoryRef = "devEntityManagerFactory", transactionManagerRef = "devTransactionManager")
 public class DevDBConfig {
 
-    @Bean
+//    @Bean
     public LocalContainerEntityManagerFactoryBean devEntityManagerFactory() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setGenerateDdl(true);
@@ -30,12 +29,12 @@ public class DevDBConfig {
         return factoryBean;
     }
 
-    @Bean
+//    @Bean
     public PlatformTransactionManager devTransactionManager() {
         return new JpaTransactionManager(devEntityManagerFactory().getObject());
     }
 
-    @Bean
+//    @Bean
     DataSource devDataSource() {
         return DataSourceBuilder.create()
                 .url("jdbc:postgresql://localhost:54322/ge_apm")
