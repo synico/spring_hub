@@ -6,9 +6,9 @@ spring:
     url: jdbc:postgresql://localhost:54322/ge_apm
     username: postgres
     password: root
-  server:
-    port: 9000
-
+  devtools:
+    restart:
+      enabled: true
   jpa:
     properties:
       hibernate:
@@ -17,3 +17,6 @@ spring:
 
   autoconfigure:
     exclude:
+
+server:
+  port: 9000
