@@ -1,5 +1,7 @@
 package com.ge.hc.healthlink;
 
+import com.ge.hc.healthlink.config.HealthLinkBrokerServerConfig;
+import com.ge.hc.healthlink.config.HealthLinkTopicConfig;
 import com.ge.hc.healthlink.entity.ElectricityMessage;
 import com.ge.hc.healthlink.repository.ElectricityMessageRepository;
 import org.apache.commons.logging.Log;
@@ -24,6 +26,12 @@ public class HealthlinkApplication {
 	private static final Log LOGGER = LogFactory.getLog(HealthlinkApplication.class);
 
 	@Autowired
+	private HealthLinkBrokerServerConfig brokerServerConfig;
+
+	@Autowired
+	private HealthLinkTopicConfig topicConfig;
+
+	@Autowired
 	private ElectricityMessageRepository electricityMsgRepository;
 
 	public static void main(String[] args) {
@@ -34,7 +42,10 @@ public class HealthlinkApplication {
 	public MqttPahoClientFactory mqttClientFactory() {
 		DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
 		MqttConnectOptions options = new MqttConnectOptions();
-		options.setServerURIs(new String[] { "tcp://localhost:1883" });
+		LOGGER.info("hostname: " + brokerServerConfig.getHostname());
+		options.setServerURIs(new String[] { brokerServerConfig.getHostname() + ":" + brokerServerConfig.getPort() });
+		options.setUserName(brokerServerConfig.getUsername());
+		options.setPassword(brokerServerConfig.getPassword().toCharArray());
 		factory.setConnectionOptions(options);
 		return factory;
 	}
@@ -42,21 +53,21 @@ public class HealthlinkApplication {
 	@Bean
 	public IntegrationFlow mqttInFlow() {
 		return IntegrationFlows.from(mqttInbound())
-				.transform(p -> p + ", received from MQTT")
+//				.transform(p -> p + ", received from MQTT")
 				.transform(p -> {
 					ElectricityMessage msg = new ElectricityMessage();
 					msg.setMessageContent(p.toString());
 					electricityMsgRepository.save(msg);
-					return "test";
+					return msg.toString();
 				})
-				.handle(logger(LoggingHandler.Level.INFO, "mqttInFlow"))
+				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
 				.get();
 	}
 
 	@Bean
 	public MessageProducerSupport mqttInbound() {
 		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("healthlinkMsgConsumer",
-				mqttClientFactory(), "/HealthLink/Log/heartbeat");
+				mqttClientFactory(), topicConfig.getLog());
 		adapter.setCompletionTimeout(5000);
 		adapter.setConverter(new DefaultPahoMessageConverter());
 //		adapter.setQos(1);

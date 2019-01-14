@@ -1,0 +1,9 @@
+healthlink:
+  brokers-server:
+    hostname: tcp://localhost
+    port: 1883
+    username: artemisBroker
+    password: GehcDi9it@l
+  topic:
+    log: /HealthLink/log
+    event: /HealthLink/event
