@@ -13,7 +13,7 @@
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
-        <file>/tmp/springboot_demo-${bySecond}.log</file>
+        <file>/tmp/healthlink-client-${bySecond}.log</file>
         <append>true</append>
     </appender>
     <root level="INFO">
@@ -21,7 +21,7 @@
         <appender-ref ref="file" />
     </root>
     
-    <logger name = "com.nick.rest.SimpleDataResource" level = "debug" additivity = "false">
+    <!--<logger name = "com.nick.rest.SimpleDataResource" level = "debug" additivity = "false">
         <appender-ref ref="console"/>
-    </logger>
+    </logger>-->
 </configuration>
