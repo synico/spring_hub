@@ -2,8 +2,8 @@ healthlink:
   broker-server:
     hostname: tcp://apm-dev.hcdigital.com.cn
     port: 1883
-    username: artemisBroker
-    password: GehcDi9it@l
+    username: ENC(dVJ0tIDP3KhueOGu8ob+krbLvpVwsGQB)
+    password: ENC(c2bqjptt3UESDLoVelLUt4bG8Wak1axE)
   topic:
     log: /HealthLink/log
     event: /HealthLink/event
@@ -12,14 +12,17 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:54322/ge_apm
     driver_class_name: org.postgresql.Driver
-    username: postgres
-    password: root
+    username: ENC(ISQSpiVMgJOfrpZwqr4zEcVfWJr1H/Fb)
+    password: ENC(OPfddipOQD51bAS2TLLpsw==)
   jpa:
     properties:
       hibernate:
         ddl-auto: update
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
-        jdbc:
-          lob:
-            non_contextual_creation: true
+        hbm2ddl.auto: none
+        jdbc.lob.non_contextual_creation: true
+
+jasypt:
+  encryptor:
+    password: H1oFwuFRwiAOB0biZHVcjQ==
