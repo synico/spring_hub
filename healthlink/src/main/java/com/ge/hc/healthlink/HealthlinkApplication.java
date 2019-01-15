@@ -42,8 +42,10 @@ public class HealthlinkApplication {
 	public MqttPahoClientFactory mqttClientFactory() {
 		DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
 		MqttConnectOptions options = new MqttConnectOptions();
-		LOGGER.info("hostname: " + brokerServerConfig.getHostname());
-		options.setServerURIs(new String[] { brokerServerConfig.getHostname() + ":" + brokerServerConfig.getPort() });
+
+		String serverUrl = brokerServerConfig.getHostname() + ":" + brokerServerConfig.getPort();
+		LOGGER.info("serverUrl: " + serverUrl);
+		options.setServerURIs(new String[] { serverUrl });
 		options.setUserName(brokerServerConfig.getUsername());
 		options.setPassword(brokerServerConfig.getPassword().toCharArray());
 		factory.setConnectionOptions(options);
@@ -51,8 +53,8 @@ public class HealthlinkApplication {
 	}
 
 	@Bean
-	public IntegrationFlow mqttInFlow() {
-		return IntegrationFlows.from(mqttInbound())
+	public IntegrationFlow mqttLogInFlow() {
+		return IntegrationFlows.from(mqttLogInbound())
 //				.transform(p -> p + ", received from MQTT")
 				.transform(p -> {
 					ElectricityMessage msg = new ElectricityMessage();
@@ -65,12 +67,32 @@ public class HealthlinkApplication {
 	}
 
 	@Bean
-	public MessageProducerSupport mqttInbound() {
-		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("healthlinkMsgConsumer",
-				mqttClientFactory(), topicConfig.getLog());
+	public IntegrationFlow mqttEventFlow() {
+		return IntegrationFlows.from(mqttEventInbound())
+				.transform(p -> {
+					ElectricityMessage msg = new ElectricityMessage();
+					msg.setMessageContent(p.toString());
+					electricityMsgRepository.save(msg);
+					return msg.toString();
+				})
+				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
+				.get();
+	}
+
+	@Bean
+	public MessageProducerSupport mqttLogInbound() {
+		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("healthlinkMsgConsumer", mqttClientFactory(), topicConfig.getLog());
 		adapter.setCompletionTimeout(5000);
 		adapter.setConverter(new DefaultPahoMessageConverter());
 //		adapter.setQos(1);
+		return adapter;
+	}
+
+	@Bean
+	public MessageProducerSupport mqttEventInbound() {
+		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("healthMsgConsumer", mqttClientFactory(), topicConfig.getEvent());
+		adapter.setCompletionTimeout(5000);
+		adapter.setConverter(new DefaultPahoMessageConverter());
 		return adapter;
 	}
 

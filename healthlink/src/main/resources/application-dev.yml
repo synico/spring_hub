@@ -1,9 +1,25 @@
 healthlink:
-  brokers-server:
-    hostname: tcp://localhost
+  broker-server:
+    hostname: tcp://apm-dev.hcdigital.com.cn
     port: 1883
     username: artemisBroker
     password: GehcDi9it@l
   topic:
     log: /HealthLink/log
     event: /HealthLink/event
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:54322/ge_apm
+    driver_class_name: org.postgresql.Driver
+    username: postgres
+    password: root
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: update
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
