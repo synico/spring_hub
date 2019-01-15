@@ -57,7 +57,7 @@ public class HealthlinkApplicationTests {
 	@Test
 	public void encryptInfo4Database() {
 		String username = encryptor.encrypt("postgres");
-		String password = encryptor.encrypt("root");
+		String password = encryptor.encrypt("GehcDi9it@l");
 		System.out.println("database username: " + username);
 		System.out.println("database password: " + password);
 	}

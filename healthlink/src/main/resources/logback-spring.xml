@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <contextName>logback</contextName>
+
+    <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <file>/tmp/springboot_demo-${bySecond}.log</file>
+        <append>true</append>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file" />
+    </root>
+    
+    <logger name = "com.nick.rest.SimpleDataResource" level = "debug" additivity = "false">
+        <appender-ref ref="console"/>
+    </logger>
+</configuration>

@@ -2,18 +2,18 @@ healthlink:
   broker-server:
     hostname: tcp://apm-dev.hcdigital.com.cn
     port: 1883
-    username: ENC(PMLvf9Ks55A+PVJvdYh7/T0EquxPyZ3v)
-    password: ENC(VVwbMgVdBrkzlPcwLc2yEUjMFNCR/JHh)
+    username: ENC(dVJ0tIDP3KhueOGu8ob+krbLvpVwsGQB)
+    password: ENC(c2bqjptt3UESDLoVelLUt4bG8Wak1axE)
   topic:
     log: /HealthLink/log
     event: /HealthLink/event
 
 spring:
   datasource:
-    url: jdbc:postgresql://apm-dev.hcdigital.com.cn:5432/ge_apm
+    url: jdbc:postgresql://localhost:54322/ge_apm
     driver_class_name: org.postgresql.Driver
-    username: ENC(t/NXk5iYwe5O+dKInXU+DoZA6FJgqKKW)
-    password: ENC(fCnQdkmZY6nZR7He/1RXuE1m0Oq1+Unk)
+    username: ENC(ISQSpiVMgJOfrpZwqr4zEcVfWJr1H/Fb)
+    password: ENC(OPfddipOQD51bAS2TLLpsw==)
   jpa:
     properties:
       hibernate:
