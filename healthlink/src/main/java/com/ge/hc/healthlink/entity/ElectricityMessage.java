@@ -42,10 +42,10 @@ public class ElectricityMessage {
     @LastModifiedDate
     @Column(name = "last_modified_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    private Date lastModifiedDate = new Date();
 
     public String toString() {
-        return this.messageContent;
+        return this.topic + ":" + this.messageContent;
     }
 
 }
