@@ -2,8 +2,10 @@ package com.ge.hc.healthlink.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "electricity_message")
@@ -19,7 +21,7 @@ public class ElectricityMessage {
     @Column(name = "message_content", columnDefinition = "VARCHAR(255)")
     private String messageContent;
 
-    @Column(name = "asset_mac", columnDefinition = "CHAR(14)")
+    @Column(name = "asset_mac", columnDefinition = "CHAR(16")
     private String assetMAC;
 
     @Column(name = "create_date")
@@ -33,6 +35,14 @@ public class ElectricityMessage {
 
     @Column(name = "field_intensity")
     private Integer fieldIntensity;
+
+    @Column(name = "msg_topic", columnDefinition = "CHAR(32)")
+    private String topic;
+
+    @LastModifiedDate
+    @Column(name = "last_modified_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
 
     public String toString() {
         return this.messageContent;

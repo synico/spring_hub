@@ -7,6 +7,9 @@ healthlink:
   topic:
     log: /HealthLink/log
     event: /HealthLink/event
+    power: /HealthLink/power
+    link: /HealthLink/link
+    current: /HealthLink/current
 
 spring:
   datasource:

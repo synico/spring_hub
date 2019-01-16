@@ -12,4 +12,11 @@ public class HealthLinkTopicConfig {
     private String log;
 
     private String event;
+
+    private String power;
+
+    private String link;
+
+    private String current;
+
 }

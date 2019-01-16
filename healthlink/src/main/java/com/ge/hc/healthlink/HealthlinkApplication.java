@@ -54,10 +54,11 @@ public class HealthlinkApplication {
 
 	@Bean
 	public IntegrationFlow mqttLogInFlow() {
-		return IntegrationFlows.from(mqttLogInbound())
+		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getLog()))
 //				.transform(p -> p + ", received from MQTT")
 				.transform(p -> {
 					ElectricityMessage msg = new ElectricityMessage();
+					msg.setTopic(topicConfig.getLog());
 					msg.setMessageContent(p.toString());
 					electricityMsgRepository.save(msg);
 					return msg.toString();
@@ -68,9 +69,10 @@ public class HealthlinkApplication {
 
 	@Bean
 	public IntegrationFlow mqttEventFlow() {
-		return IntegrationFlows.from(mqttEventInbound())
+		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getEvent()))
 				.transform(p -> {
 					ElectricityMessage msg = new ElectricityMessage();
+					msg.setTopic(topicConfig.getEvent());
 					msg.setMessageContent(p.toString());
 					electricityMsgRepository.save(msg);
 					return msg.toString();
@@ -80,17 +82,52 @@ public class HealthlinkApplication {
 	}
 
 	@Bean
-	public MessageProducerSupport mqttLogInbound() {
-		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("healthlinkMsgConsumer", mqttClientFactory(), topicConfig.getLog());
-		adapter.setCompletionTimeout(5000);
-		adapter.setConverter(new DefaultPahoMessageConverter());
-//		adapter.setQos(1);
-		return adapter;
+	public IntegrationFlow mqttPowerFlow() {
+		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getPower()))
+				.transform(p -> {
+					ElectricityMessage msg = new ElectricityMessage();
+					msg.setTopic(topicConfig.getPower());
+					msg.setMessageContent(p.toString());
+					electricityMsgRepository.save(msg);
+					return msg.toString();
+				})
+				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
+				.get();
 	}
 
 	@Bean
-	public MessageProducerSupport mqttEventInbound() {
-		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("healthMsgConsumer", mqttClientFactory(), topicConfig.getEvent());
+	public IntegrationFlow mqttLinkFlow() {
+		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getLink()))
+				.transform(p -> {
+					ElectricityMessage msg = new ElectricityMessage();
+					msg.setTopic(topicConfig.getLink());
+					msg.setMessageContent(p.toString());
+					electricityMsgRepository.save(msg);
+					return msg.toString();
+				})
+				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
+				.get();
+	}
+
+	@Bean
+	public IntegrationFlow mqttCurrentFlow() {
+		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getCurrent()))
+				.transform(p -> {
+					ElectricityMessage msg = new ElectricityMessage();
+					msg.setTopic(topicConfig.getCurrent());
+					msg.setMessageContent(p.toString());
+					electricityMsgRepository.save(msg);
+					return msg.toString();
+				})
+				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
+				.get();
+	}
+
+	@Bean
+	public MessageProducerSupport mqttInboundHandler(String topic) {
+		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("healthlinkMsgConsumer",
+				mqttClientFactory(),
+				topic);
 		adapter.setCompletionTimeout(5000);
 		adapter.setConverter(new DefaultPahoMessageConverter());
 		return adapter;
