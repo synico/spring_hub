@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.endpoint.MessageProducerSupport;
@@ -27,7 +28,6 @@ public class EventHandler {
     @Autowired
     private ElectricityMessageRepository electricityMsgRepository;
 
-    @Bean
     public IntegrationFlow mqttEventFlow() {
         return IntegrationFlows.from(mqttEventInbound())
                 .transform(p -> {
@@ -40,7 +40,6 @@ public class EventHandler {
                 .get();
     }
 
-    @Bean
     public MessageProducerSupport mqttEventInbound() {
         MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("healthMsgConsumer", mqttClientFactory.mqttClientFactory(), mqttClientFactory.getTopicConfig().getEvent());
         adapter.setCompletionTimeout(5000);

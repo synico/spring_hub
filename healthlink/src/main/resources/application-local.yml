@@ -26,3 +26,5 @@ spring:
 jasypt:
   encryptor:
     password: H1oFwuFRwiAOB0biZHVcjQ==
+
+logging.level.org.springframework.context.ApplicationContext: debug
