@@ -4,6 +4,9 @@ import com.ge.hc.healthlink.config.HealthLinkBrokerServerConfig;
 import com.ge.hc.healthlink.config.HealthLinkTopicConfig;
 import com.ge.hc.healthlink.entity.ElectricityMessage;
 import com.ge.hc.healthlink.repository.ElectricityMessageRepository;
+import com.ge.hc.healthlink.transform.ElectricityMsgTransformer;
+import com.ge.hc.healthlink.transform.LinkMsgTransformer;
+import com.ge.hc.healthlink.transform.PowerStatusMsgTransformer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -55,14 +58,7 @@ public class HealthlinkApplication {
 	@Bean
 	public IntegrationFlow mqttLogInFlow() {
 		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getLog()))
-//				.transform(p -> p + ", received from MQTT")
-				.transform(p -> {
-					ElectricityMessage msg = new ElectricityMessage();
-					msg.setTopic(topicConfig.getLog());
-					msg.setMessageContent(p.toString());
-					electricityMsgRepository.save(msg);
-					return msg.toString();
-				})
+				.transform(p -> p + ", received log from MQTT")
 				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
 				.get();
 	}
@@ -70,27 +66,7 @@ public class HealthlinkApplication {
 	@Bean
 	public IntegrationFlow mqttEventFlow() {
 		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getEvent()))
-				.transform(p -> {
-					ElectricityMessage msg = new ElectricityMessage();
-					msg.setTopic(topicConfig.getEvent());
-					msg.setMessageContent(p.toString());
-					electricityMsgRepository.save(msg);
-					return msg.toString();
-				})
-				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
-				.get();
-	}
-
-	@Bean
-	public IntegrationFlow mqttPowerFlow() {
-		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getPower()))
-				.transform(p -> {
-					ElectricityMessage msg = new ElectricityMessage();
-					msg.setTopic(topicConfig.getPower());
-					msg.setMessageContent(p.toString());
-					electricityMsgRepository.save(msg);
-					return msg.toString();
-				})
+				.transform(new PowerStatusMsgTransformer())
 				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
 				.get();
 	}
@@ -98,13 +74,7 @@ public class HealthlinkApplication {
 	@Bean
 	public IntegrationFlow mqttLinkFlow() {
 		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getLink()))
-				.transform(p -> {
-					ElectricityMessage msg = new ElectricityMessage();
-					msg.setTopic(topicConfig.getLink());
-					msg.setMessageContent(p.toString());
-					electricityMsgRepository.save(msg);
-					return msg.toString();
-				})
+				.transform(new LinkMsgTransformer())
 				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
 				.get();
 	}
@@ -112,13 +82,7 @@ public class HealthlinkApplication {
 	@Bean
 	public IntegrationFlow mqttCurrentFlow() {
 		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getCurrent()))
-				.transform(p -> {
-					ElectricityMessage msg = new ElectricityMessage();
-					msg.setTopic(topicConfig.getCurrent());
-					msg.setMessageContent(p.toString());
-					electricityMsgRepository.save(msg);
-					return msg.toString();
-				})
+				.transform(new ElectricityMsgTransformer())
 				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
 				.get();
 	}
