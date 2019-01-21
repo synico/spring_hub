@@ -4,6 +4,7 @@ import com.ge.hc.healthlink.config.HealthLinkTopicConfig;
 import com.ge.hc.healthlink.transform.ElectricityMsgTransformer;
 import com.ge.hc.healthlink.transform.LinkMsgTransformer;
 import com.ge.hc.healthlink.transform.PowerStatusMsgTransformer;
+import com.ge.hc.healthlink.util.HealthLinkTopicsEnum;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +37,15 @@ public class MqttMessageHandler implements MessageHandler {
         LOGGER.info("topic: " + headers.get("mqtt_receivedTopic") + "####" + message.getPayload());
         String msgTopic = headers.get("mqtt_receivedTopic").toString();
         String msgPayload = message.getPayload().toString();
-        switch (msgTopic) {
-            case "/HealthLink/current":
+        HealthLinkTopicsEnum topic = HealthLinkTopicsEnum.getTopicByName(msgTopic);
+        switch (topic) {
+            case CURRENT:
                 electricityMsgTransformer.transform(msgPayload);
                 break;
-            case "/HealthLink/power":
+            case POWER:
                 powerStatusMsgTransformer.transform(msgPayload);
                 break;
-            case "/HealthLink/link":
+            case LINK:
                 linkMsgTransformer.transform(msgPayload);
                 break;
             default:
