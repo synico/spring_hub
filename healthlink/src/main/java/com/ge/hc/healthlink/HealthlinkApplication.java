@@ -3,6 +3,7 @@ package com.ge.hc.healthlink;
 import com.ge.hc.healthlink.config.HealthLinkBrokerServerConfig;
 import com.ge.hc.healthlink.config.HealthLinkTopicConfig;
 import com.ge.hc.healthlink.entity.ElectricityMessage;
+import com.ge.hc.healthlink.handler.MqttMessageHandler;
 import com.ge.hc.healthlink.repository.ElectricityMessageRepository;
 import com.ge.hc.healthlink.transform.ElectricityMsgTransformer;
 import com.ge.hc.healthlink.transform.LinkMsgTransformer;
@@ -35,7 +36,7 @@ public class HealthlinkApplication {
 	private HealthLinkTopicConfig topicConfig;
 
 	@Autowired
-	private ElectricityMessageRepository electricityMsgRepository;
+	private MqttMessageHandler msgHandler;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HealthlinkApplication.class, args);
@@ -57,50 +58,22 @@ public class HealthlinkApplication {
 
 	@Bean
 	public IntegrationFlow mqttLogInFlow() {
-		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getLog()))
-				.transform(p -> p + ", received log from MQTT")
-				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
+		return IntegrationFlows.from(mqttInboundHandler())
+				.handle(p -> msgHandler.handleMessage(p))
 				.get();
 	}
 
 	@Bean
-	public IntegrationFlow mqttEventFlow() {
-		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getEvent()))
-				.transform(new PowerStatusMsgTransformer())
-				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
-				.get();
-	}
-
-	@Bean
-	public IntegrationFlow mqttLinkFlow() {
-		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getLink()))
-				.transform(new LinkMsgTransformer())
-				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
-				.get();
-	}
-
-	@Bean
-	public IntegrationFlow mqttCurrentFlow() {
-		return IntegrationFlows.from(mqttInboundHandler(topicConfig.getCurrent()))
-				.transform(new ElectricityMsgTransformer())
-				.handle(logger(LoggingHandler.Level.INFO, HealthlinkApplication.class.getName()))
-				.get();
-	}
-
-	@Bean
-	public MessageProducerSupport mqttInboundHandler(String topic) {
+	public MessageProducerSupport mqttInboundHandler() {
 		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("healthlinkMsgConsumer",
-				mqttClientFactory(),
-				topic);
+				mqttClientFactory());
+		adapter.addTopic(topicConfig.getCurrent());
+		adapter.addTopic(topicConfig.getLink());
+		adapter.addTopic(topicConfig.getEvent());
+		adapter.addTopic(topicConfig.getLog());
 		adapter.setCompletionTimeout(5000);
 		adapter.setConverter(new DefaultPahoMessageConverter());
 		return adapter;
-	}
-
-	public LoggingHandler logger(LoggingHandler.Level level, String loggerName) {
-		LoggingHandler loggingHandler = new LoggingHandler(level);
-		loggingHandler.setLoggerName(loggerName);
-		return loggingHandler;
 	}
 
 }

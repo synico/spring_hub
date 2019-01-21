@@ -35,7 +35,7 @@ public class LinkMessage {
     private String apMAC;
 
     public LinkMessage convertMsg2Entity(String msg) {
-        String infos[] = msg.split("|");
+        String infos[] = msg.split("\\|");
         if(infos.length == 7) {
             this.setApMAC(infos[1]);
             this.setAppVersion(infos[2]);

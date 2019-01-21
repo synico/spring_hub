@@ -29,7 +29,7 @@ public class PowerStatusMessage {
     private String powerOffDate;
 
     public PowerStatusMessage convertMsg2Entity(String msg) {
-        String infos[] = msg.split("|");
+        String infos[] = msg.split("\\|");
         if(infos.length == 5) {
             this.setAssetMAC(infos[1]);
             this.setEventSeq(Integer.parseInt(infos[2]));
