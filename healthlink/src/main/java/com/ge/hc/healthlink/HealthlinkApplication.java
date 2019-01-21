@@ -48,7 +48,7 @@ public class HealthlinkApplication {
 		MqttConnectOptions options = new MqttConnectOptions();
 
 		String serverUrl = brokerServerConfig.getHostname() + ":" + brokerServerConfig.getPort();
-		LOGGER.info("serverUrl: " + serverUrl);
+		LOGGER.debug("serverUrl: " + serverUrl);
 		options.setServerURIs(new String[] { serverUrl });
 		options.setUserName(brokerServerConfig.getUsername());
 		options.setPassword(brokerServerConfig.getPassword().toCharArray());
@@ -57,7 +57,7 @@ public class HealthlinkApplication {
 	}
 
 	@Bean
-	public IntegrationFlow mqttLogInFlow() {
+	public IntegrationFlow mqttInboundFlow() {
 		return IntegrationFlows.from(mqttInboundHandler())
 				.handle(p -> msgHandler.handleMessage(p))
 				.get();
@@ -69,7 +69,7 @@ public class HealthlinkApplication {
 				mqttClientFactory());
 		adapter.addTopic(topicConfig.getCurrent());
 		adapter.addTopic(topicConfig.getLink());
-		adapter.addTopic(topicConfig.getEvent());
+		adapter.addTopic(topicConfig.getPower());
 		adapter.addTopic(topicConfig.getLog());
 		adapter.setCompletionTimeout(5000);
 		adapter.setConverter(new DefaultPahoMessageConverter());

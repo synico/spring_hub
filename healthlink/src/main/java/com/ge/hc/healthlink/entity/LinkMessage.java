@@ -37,12 +37,12 @@ public class LinkMessage {
     public LinkMessage convertMsg2Entity(String msg) {
         String infos[] = msg.split("\\|");
         if(infos.length == 7) {
-            this.setApMAC(infos[1]);
+            this.setAssetMAC(infos[1]);
             this.setAppVersion(infos[2]);
             this.setAssetIP(infos[3]);
             this.setEventDate(infos[4]);
             this.setApSSID(infos[5]);
-            this.setApMAC(infos[6]);
+            this.setApMAC(infos[6].replace(":", ""));
         }
         return this;
     }

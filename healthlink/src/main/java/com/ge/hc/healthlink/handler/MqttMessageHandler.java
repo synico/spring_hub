@@ -40,7 +40,7 @@ public class MqttMessageHandler implements MessageHandler {
             case "/HealthLink/current":
                 electricityMsgTransformer.transform(msgPayload);
                 break;
-            case "/HealthLink/event":
+            case "/HealthLink/power":
                 powerStatusMsgTransformer.transform(msgPayload);
                 break;
             case "/HealthLink/link":
