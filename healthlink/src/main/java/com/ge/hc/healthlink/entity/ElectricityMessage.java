@@ -22,8 +22,8 @@ public class ElectricityMessage {
     @Column(name = "asset_mac", columnDefinition = "CHAR(16)")
     private String assetMAC;
 
-    @Column(name = "event_date", columnDefinition = "CHAR(12)")
-    private String eventDate;
+    @Column(name = "event_date")
+    private Integer eventDate;
 
     @Column(name = "electricity_value")
     private Integer electricity;
@@ -39,7 +39,7 @@ public class ElectricityMessage {
         if(infos.length == 6) {
             this.setStatus(infos[0]);
             this.setAssetMAC(infos[1]);
-            this.setEventDate(infos[2]);
+            this.setEventDate(Integer.parseInt(infos[2]));
             this.setElectricity(Integer.parseInt(infos[3]));
             this.setInstantPower(Integer.parseInt(infos[4]));
             this.setFieldIntensity(Integer.parseInt(infos[5]));

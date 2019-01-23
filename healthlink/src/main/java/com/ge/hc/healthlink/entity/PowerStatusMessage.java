@@ -22,19 +22,19 @@ public class PowerStatusMessage {
     @Column(name = "event_seq")
     private Integer eventSeq;
 
-    @Column(name = "power_on_date", columnDefinition = "CHAR(12)")
-    private String powerOnDate;
+    @Column(name = "power_on_date")
+    private Integer powerOnDate;
 
-    @Column(name = "power_off_date", columnDefinition = "CHAR(12)")
-    private String powerOffDate;
+    @Column(name = "power_off_date")
+    private Integer powerOffDate;
 
     public PowerStatusMessage convertMsg2Entity(String msg) {
         String infos[] = msg.split("\\|");
         if(infos.length == 5) {
             this.setAssetMAC(infos[1]);
             this.setEventSeq(Integer.parseInt(infos[2]));
-            this.setPowerOnDate(infos[3]);
-            this.setPowerOffDate(infos[4]);
+            this.setPowerOnDate(Integer.parseInt(infos[3]));
+            this.setPowerOffDate(Integer.parseInt(infos[4]));
         }
         return this;
     }

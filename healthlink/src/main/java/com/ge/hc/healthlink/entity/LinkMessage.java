@@ -25,8 +25,8 @@ public class LinkMessage {
     @Column(name = "asset_ip_address", columnDefinition = "CHAR(16)")
     private String assetIP;
 
-    @Column(name = "event_date", columnDefinition = "CHAR(12)")
-    private String eventDate;
+    @Column(name = "event_date")
+    private Integer eventDate;
 
     @Column(name = "ap_ssid_name", columnDefinition = "VARCHAR(64)")
     private String apSSID;
@@ -40,7 +40,7 @@ public class LinkMessage {
             this.setAssetMAC(infos[1]);
             this.setAppVersion(infos[2]);
             this.setAssetIP(infos[3]);
-            this.setEventDate(infos[4]);
+            this.setEventDate(Integer.parseInt(infos[4]));
             this.setApSSID(infos[5]);
             this.setApMAC(infos[6].replace(":", ""));
         }
