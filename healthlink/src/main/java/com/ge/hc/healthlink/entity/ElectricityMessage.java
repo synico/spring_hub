@@ -4,6 +4,9 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "hl_electricity_message")
@@ -33,6 +36,15 @@ public class ElectricityMessage {
 
     @Column(name = "field_intensity")
     private Integer fieldIntensity;
+
+    @Transient
+    private String eventTimestamp;
+
+    public String getEventTimestamp() {
+        LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(this.eventDate.longValue(), 0, ZoneOffset.of("+8"));
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+        return localDateTime.format(dateTimeFormatter);
+    }
 
     public ElectricityMessage convertMsg2Entity(String theMsg) {
         String infos [] = theMsg.split("\\|");
