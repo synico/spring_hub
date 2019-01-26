@@ -20,7 +20,7 @@ public class ElectricityMsgAggregation {
     private String assetMAC;
 
     @Column(name = "event_date")
-    private Integer eventDate;
+    private String eventDate;
 
     @Column(name = "total_electricity")
     private Integer totalElectricity;
