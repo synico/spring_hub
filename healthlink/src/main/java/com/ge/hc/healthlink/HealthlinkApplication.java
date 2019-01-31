@@ -1,6 +1,7 @@
 package com.ge.hc.healthlink;
 
 import com.ge.hc.healthlink.config.HealthLinkBrokerServerConfig;
+import com.ge.hc.healthlink.config.HealthLinkMqttConfig;
 import com.ge.hc.healthlink.config.HealthLinkTopicConfig;
 import com.ge.hc.healthlink.entity.ElectricityMessage;
 import com.ge.hc.healthlink.handler.MqttMessageHandler;
@@ -38,6 +39,9 @@ public class HealthlinkApplication {
 	private HealthLinkTopicConfig topicConfig;
 
 	@Autowired
+	private HealthLinkMqttConfig mqttConfig;
+
+	@Autowired
 	private MqttMessageHandler msgHandler;
 
 	public static void main(String[] args) {
@@ -67,7 +71,8 @@ public class HealthlinkApplication {
 
 	@Bean
 	public MessageProducerSupport mqttInboundHandler() {
-		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("healthlinkMsgConsumer",
+		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter(
+				"healthlinkMsgConsumer_" + mqttConfig.getClientId(),
 				mqttClientFactory());
 		adapter.addTopic(topicConfig.getCurrent());
 		adapter.addTopic(topicConfig.getLink());

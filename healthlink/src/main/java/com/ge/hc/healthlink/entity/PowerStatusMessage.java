@@ -33,8 +33,8 @@ public class PowerStatusMessage {
         if(infos.length == 5) {
             this.setAssetMAC(infos[1]);
             this.setEventSeq(Integer.parseInt(infos[2]));
-            this.setPowerOnDate(Integer.parseInt(infos[3]));
-            this.setPowerOffDate(Integer.parseInt(infos[4]));
+            this.setPowerOnDate(Integer.parseInt(infos[3]) - 3 * 60 * 60);
+            this.setPowerOffDate(Integer.parseInt(infos[4]) - 3 * 60 * 60);
         }
         return this;
     }

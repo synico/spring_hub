@@ -51,7 +51,7 @@ public class ElectricityMessage {
         if(infos.length == 6) {
             this.setStatus(infos[0]);
             this.setAssetMAC(infos[1].trim());
-            this.setEventDate(Integer.parseInt(infos[2].trim()));
+            this.setEventDate(Integer.parseInt(infos[2].trim()) - 3 * 60 * 60);
             this.setElectricity(Integer.parseInt(infos[3].trim()));
             this.setInstantPower(Integer.parseInt(infos[4]));
             this.setFieldIntensity(Integer.parseInt(infos[5]));

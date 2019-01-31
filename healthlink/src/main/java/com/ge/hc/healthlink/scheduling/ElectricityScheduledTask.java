@@ -37,13 +37,13 @@ public class ElectricityScheduledTask {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         Long currentEpoch = localDateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli()/1000;
-        currentEpoch = currentEpoch + 3 * 60 * 60;
+//        currentEpoch = currentEpoch + 3 * 60 * 60;
         List<ElectricityMessage> electricityMessages = electricityMessageRepository.findByEventDateBetween(currentEpoch.intValue() - 60, currentEpoch.intValue());
 
         Map<String, ElectricityMsgAggregation> emaMap = new HashMap<>();
         String emaMapKey = null;
         for(ElectricityMessage msg : electricityMessages) {
-            LOGGER.info("formatted event time: " + msg.getEventTimestamp());
+            LOGGER.debug("formatted event time: " + msg.getEventTimestamp());
             ElectricityMsgAggregation ema = null;
             emaMapKey = msg.getAssetMAC() + "|" + msg.getEventTimestamp();
             if(emaMap.containsKey(emaMapKey)) {

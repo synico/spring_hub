@@ -40,7 +40,7 @@ public class LinkMessage {
             this.setAssetMAC(infos[1]);
             this.setAppVersion(infos[2]);
             this.setAssetIP(infos[3]);
-            this.setEventDate(Integer.parseInt(infos[4]));
+            this.setEventDate(Integer.parseInt(infos[4]) - 3 * 60 * 60);
             this.setApSSID(infos[5]);
             this.setApMAC(infos[6].replace(":", ""));
         }
