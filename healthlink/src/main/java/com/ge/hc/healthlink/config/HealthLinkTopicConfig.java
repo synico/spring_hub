@@ -19,4 +19,6 @@ public class HealthLinkTopicConfig {
 
     private String current;
 
+    private String data;
+
 }

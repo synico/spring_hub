@@ -10,6 +10,7 @@ healthlink:
     power: /HealthLink/power
     link: /HealthLink/link
     current: /HealthLink/current
+    data: /HealthLink/data
   mqtt:
     consumer:
       client_id: ${random.value}

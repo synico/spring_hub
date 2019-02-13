@@ -1,6 +1,7 @@
 package com.ge.hc.healthlink.handler;
 
 import com.ge.hc.healthlink.config.HealthLinkTopicConfig;
+import com.ge.hc.healthlink.transform.ElectricityHeartbeatTransformer;
 import com.ge.hc.healthlink.transform.ElectricityMsgTransformer;
 import com.ge.hc.healthlink.transform.LinkMsgTransformer;
 import com.ge.hc.healthlink.transform.PowerStatusMsgTransformer;
@@ -31,6 +32,9 @@ public class MqttMessageHandler implements MessageHandler {
     @Autowired
     private LinkMsgTransformer linkMsgTransformer;
 
+    @Autowired
+    private ElectricityHeartbeatTransformer heartbeatTransformer;
+
     @Override
     public void handleMessage(Message<?> message) throws MessagingException {
         MessageHeaders headers = message.getHeaders();
@@ -47,6 +51,9 @@ public class MqttMessageHandler implements MessageHandler {
                 break;
             case LINK:
                 linkMsgTransformer.transform(msgPayload);
+                break;
+            case DATA:
+                heartbeatTransformer.transform(msgPayload);
                 break;
             default:
                 LOGGER.info("msg: " + msgPayload);

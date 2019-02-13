@@ -26,6 +26,10 @@ public enum HealthLinkTopicsEnum {
     /**
      * healthlink.topic.current
      */
+    DATA("/HealthLink/data"),
+    /**
+     * healthlink.topic.current
+     */
     CURRENT("/HealthLink/current");
 
     @Getter

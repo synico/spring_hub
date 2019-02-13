@@ -78,6 +78,7 @@ public class HealthlinkApplication {
 		adapter.addTopic(topicConfig.getLink());
 		adapter.addTopic(topicConfig.getPower());
 		adapter.addTopic(topicConfig.getLog());
+		adapter.addTopic(topicConfig.getData());
 		adapter.setCompletionTimeout(5000);
 		adapter.setConverter(new DefaultPahoMessageConverter());
 		return adapter;
