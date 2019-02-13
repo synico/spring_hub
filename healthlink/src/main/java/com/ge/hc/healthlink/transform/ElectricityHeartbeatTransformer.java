@@ -46,6 +46,9 @@ public class ElectricityHeartbeatTransformer implements GenericTransformer<Strin
                 heartbeat.setElectricity(Integer.parseInt(infos[i].trim()));
                 msgEntities.add(heartbeat);
             }
+            if(infos.length != 23 || msgEntities.size() != 20) {
+                LOGGER.info("ERROR: " + source);
+            }
             heartbeatRepository.saveAll(msgEntities);
         }
         return source;
