@@ -3,6 +3,7 @@ package com.ge.hc.healthlink.transform;
 import com.ge.hc.healthlink.entity.ElectricityHeartbeat;
 import com.ge.hc.healthlink.entity.HeartbeatKey;
 import com.ge.hc.healthlink.repository.ElectricityHeartbeatRepository;
+import com.ge.hc.healthlink.service.DeviceStatusCheckService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,6 +21,9 @@ public class ElectricityHeartbeatTransformer implements GenericTransformer<Strin
 
     @Autowired
     private ElectricityHeartbeatRepository heartbeatRepository;
+
+    @Autowired
+    private DeviceStatusCheckService deviceStatusCheckService;
 
     @Override
     public String transform(String source) {
@@ -50,6 +54,7 @@ public class ElectricityHeartbeatTransformer implements GenericTransformer<Strin
                 LOGGER.info("ERROR: " + source);
             }
             heartbeatRepository.saveAll(msgEntities);
+            deviceStatusCheckService.checkDeviceStatus(msgEntities);
         }
         return source;
     }

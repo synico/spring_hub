@@ -26,7 +26,7 @@ import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannel
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@EnableScheduling
+//@EnableScheduling
 @SpringBootApplication
 public class HealthlinkApplication {
 
@@ -76,8 +76,8 @@ public class HealthlinkApplication {
 				mqttClientFactory());
 		adapter.addTopic(topicConfig.getCurrent());
 		adapter.addTopic(topicConfig.getLink());
-		adapter.addTopic(topicConfig.getPower());
-		adapter.addTopic(topicConfig.getLog());
+//		adapter.addTopic(topicConfig.getPower());
+//		adapter.addTopic(topicConfig.getLog());
 		adapter.addTopic(topicConfig.getData());
 		adapter.setCompletionTimeout(5000);
 		adapter.setConverter(new DefaultPahoMessageConverter());

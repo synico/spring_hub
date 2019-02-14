@@ -26,7 +26,7 @@ spring:
       hibernate:
         ddl-auto: update
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        show_sql: true
+        show_sql: false
         hbm2ddl.auto: update
         jdbc.lob.non_contextual_creation: true
 
