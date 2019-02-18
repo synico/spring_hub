@@ -112,7 +112,7 @@ public class DeviceStatusCheckService {
                         int diff = current.getElectricity() - head.getElectricity();
                         if(diff > category.getPowerOnElectricCurrentStart()) {
                             // 前后两秒电流值的差值大于定义的开机电流变化值，如果之前设备状态为开机，则不更新设备状态
-                            if(deviceStatus.getStatus().equals(DeviceStatusEnum.POWERON.getStatusCode())) {
+                            if(deviceStatus.getStatus().equals(Integer.toString(DeviceStatusEnum.POWERON.getStatusCode()))) {
                                 // do nothing
                             } else {
                                 // 更新状态
@@ -121,10 +121,11 @@ public class DeviceStatusCheckService {
                                 status.setStatus(Integer.toString(DeviceStatusEnum.POWERON.getStatusCode()));
                                 deviceStatusRepository.save(status);
                                 latestDeviceStatus.put(assetMAC, status);
+                                deviceStatus = status;
                             }
                         }
                         // Step2. check if this is standby event
-                        if(deviceStatus.getStatus().equals(DeviceStatusEnum.STANDBY.getStatusCode())) {
+                        if(deviceStatus.getStatus().equals(Integer.toString(DeviceStatusEnum.STANDBY.getStatusCode()))) {
                             // do nothing
                         } else {
                             if(category.getStandByElectricCurrentStart() < current.getElectricity() &&
@@ -134,11 +135,12 @@ public class DeviceStatusCheckService {
                                 status.setStatus(Integer.toString(DeviceStatusEnum.STANDBY.getStatusCode()));
                                 deviceStatusRepository.save(status);
                                 latestDeviceStatus.put(assetMAC, status);
+                                deviceStatus = status;
                             }
                         }
 
                         // Step3. check if this is running event
-                        if(deviceStatus.getStatus().equals(DeviceStatusEnum.RUNNING.getStatusCode())) {
+                        if(deviceStatus.getStatus().equals(Integer.toString(DeviceStatusEnum.RUNNING.getStatusCode()))) {
                             // do nothing
                         } else {
                             if(category.getInUseElectricCurrentStart() < current.getElectricity() &&
@@ -148,11 +150,12 @@ public class DeviceStatusCheckService {
                                 status.setStatus(Integer.toString(DeviceStatusEnum.RUNNING.getStatusCode()));
                                 deviceStatusRepository.save(status);
                                 latestDeviceStatus.put(assetMAC, status);
+                                deviceStatus = status;
                             }
                         }
 
                         // Step4. check if this is a power off event
-                        if(deviceStatus.getStatus().equals(DeviceStatusEnum.POWEROFF.getStatusCode())) {
+                        if(deviceStatus.getStatus().equals(Integer.toString(DeviceStatusEnum.POWEROFF.getStatusCode()))) {
                             // do nothing
                         } else {
                             if(category.getPowerOffElectricCurrentStart() < current.getElectricity() &&
@@ -162,6 +165,7 @@ public class DeviceStatusCheckService {
                                 status.setStatus(Integer.toString(DeviceStatusEnum.POWEROFF.getStatusCode()));
                                 deviceStatusRepository.save(status);
                                 latestDeviceStatus.put(assetMAC, status);
+                                deviceStatus = status;
                             }
                         }
                         // Last step
