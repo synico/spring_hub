@@ -161,7 +161,7 @@ public class DeviceStatusCheckService {
                     ElectricityHeartbeat current = null;
                     DeviceStatusEnum previousStatus = null;
                     if(StringUtils.isNotEmpty(deviceStatus.getStatus())) {
-                        previousStatus = DeviceStatusEnum.getStatusByCode(Integer.parseInt(deviceStatus.getStatus()));
+                        previousStatus = DeviceStatusEnum.getStatusByCode(Integer.parseInt(deviceStatus.getStatus().trim()));
                     }
                     for(int idx = 1; idx < msgEntities.size(); idx++) {
                         current = msgEntities.get(idx);

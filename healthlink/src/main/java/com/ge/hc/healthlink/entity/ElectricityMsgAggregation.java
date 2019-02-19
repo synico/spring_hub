@@ -13,10 +13,10 @@ public class ElectricityMsgAggregation {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
-    @Column(name = "aggregation_id", columnDefinition = "CHAR(32)")
+    @Column(name = "aggregation_id", columnDefinition = "VARCHAR(32)")
     private String id;
 
-    @Column(name = "asset_mac", columnDefinition = "CHAR(16)")
+    @Column(name = "asset_mac", columnDefinition = "VARCHAR(16)")
     private String assetMAC;
 
     @Column(name = "event_date")
@@ -25,7 +25,7 @@ public class ElectricityMsgAggregation {
     @Column(name = "total_electricity")
     private Integer totalElectricity;
 
-    @Column(name = "ap_mac", columnDefinition = "CHAR(16)")
+    @Column(name = "ap_mac", columnDefinition = "VARCHAR(16)")
     private String apMAC;
 
 }

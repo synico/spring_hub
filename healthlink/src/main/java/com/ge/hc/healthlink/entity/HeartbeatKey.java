@@ -11,7 +11,7 @@ import java.util.Objects;
 @Embeddable
 public class HeartbeatKey implements Serializable {
 
-    @Column(name = "asset_mac", columnDefinition = "CHAR(16)")
+    @Column(name = "asset_mac", columnDefinition = "VARCHAR(16)")
     private String assetMAC;
 
     @Column(name = "event_date")

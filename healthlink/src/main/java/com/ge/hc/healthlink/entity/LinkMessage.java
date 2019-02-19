@@ -13,16 +13,16 @@ public class LinkMessage {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid")
-    @Column(name = "message_id", columnDefinition = "CHAR(32)")
+    @Column(name = "message_id", columnDefinition = "VARCHAR(32)")
     private String id;
 
-    @Column(name = "asset_mac", columnDefinition = "CHAR(16)")
+    @Column(name = "asset_mac", columnDefinition = "VARCHAR(16)")
     private String assetMAC;
 
-    @Column(name = "app_version", columnDefinition = "CHAR(8)")
+    @Column(name = "app_version", columnDefinition = "VARCHAR(8)")
     private String appVersion;
 
-    @Column(name = "asset_ip_address", columnDefinition = "CHAR(16)")
+    @Column(name = "asset_ip_address", columnDefinition = "VARCHAR(16)")
     private String assetIP;
 
     @Column(name = "event_date")
@@ -31,7 +31,7 @@ public class LinkMessage {
     @Column(name = "ap_ssid_name", columnDefinition = "VARCHAR(64)")
     private String apSSID;
 
-    @Column(name = "ap_mac", columnDefinition = "CHAR(20)")
+    @Column(name = "ap_mac", columnDefinition = "VARCHAR(20)")
     private String apMAC;
 
     public LinkMessage convertMsg2Entity(String msg) {

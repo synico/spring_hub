@@ -15,7 +15,7 @@ public class DeviceStatus {
     @EmbeddedId
     private HeartbeatKey heartbeatKey;
 
-    @Column(name = "status", columnDefinition = "CHAR(2)")
+    @Column(name = "status", columnDefinition = "VARCHAR(2)")
     private String status;
 
 }
