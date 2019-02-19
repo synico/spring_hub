@@ -33,28 +33,28 @@ public class DeviceTests {
         System.out.println("Ending...");
     }
 
-//    @Test
+    @Test
     public void saveDeviceCategory() {
         DeviceCategory category = new DeviceCategory();
-        category.setName("test_category");
-        category.setPowerOffElectricCurrentStart(0.001d);
-        category.setPowerOffElectricCurrentEnd(0.005d);
-        category.setPowerOnElectricCurrentStart(0.006d);
-        category.setPowerOnElectricCurrentEnd(10d);
-        category.setStandByElectricCurrentStart(0.01d);
-        category.setStandByElectricCurrentEnd(0.1d);
-        category.setInUseElectricCurrentStart(0.4d);
-        category.setInUseElectricCurrentEnd(0.7d);
+        category.setName("category_4_84F3EB77F175");
+        category.setPowerOffElectricCurrentStart(20d);
+        category.setPowerOffElectricCurrentEnd(-20d);
+        category.setPowerOnElectricCurrentStart(30d);
+        category.setPowerOnElectricCurrentEnd(30d);
+        category.setStandByElectricCurrentStart(100d);
+        category.setStandByElectricCurrentEnd(120d);
+        category.setInUseElectricCurrentStart(130d);
+        category.setInUseElectricCurrentEnd(400d);
         categoryRepository.save(category);
     }
 
-//    @Test
+    @Test
     public void saveDevice() {
         Device d1 = new Device();
-        d1.setDeviceCategoryUuid("d0575a2e-695a-446f-ab22-bc8ca9f36c89");
-        d1.setIotId("ECFABC216430");
+        d1.setDeviceCategoryUuid("b77081e5-9f3c-4094-a3f3-00d2ea04df3d");
+        d1.setIotId("84F3EB77F175");
         d1.setCreatedTime(LocalDateTime.now());
-        d1.setName("device1");
+        d1.setName("device3");
         deviceRepository.save(d1);
     }
 

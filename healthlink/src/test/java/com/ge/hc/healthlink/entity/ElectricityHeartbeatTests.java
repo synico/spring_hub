@@ -16,7 +16,7 @@ public class ElectricityHeartbeatTests {
 
     @Test
     public void findHeartbeatByAssetMAC() {
-        ElectricityHeartbeat heartbeat = electricityHeartbeatRepository.findLatestHeartbeatByAssetMAC("ECFABC216430");
+        ElectricityHeartbeat heartbeat = electricityHeartbeatRepository.findLatestHeartbeatByAssetMAC("84F3EB77F175");
         System.out.println(heartbeat.getHeartbeatKey());
     }
 }
