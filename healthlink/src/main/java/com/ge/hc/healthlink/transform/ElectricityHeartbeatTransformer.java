@@ -39,7 +39,7 @@ public class ElectricityHeartbeatTransformer implements GenericTransformer<Strin
 
             for(int i = 3; i < infos.length; i++) {
                 heartbeatKey = new HeartbeatKey();
-                heartbeatKey.setAssetMAC(assetMAC);
+                heartbeatKey.setAssetMAC(assetMAC.trim());
                 heartbeatKey.setEventDate(eventBeginDate);
                 heartbeat = new ElectricityHeartbeat();
                 heartbeat.setHeartbeatKey(heartbeatKey);

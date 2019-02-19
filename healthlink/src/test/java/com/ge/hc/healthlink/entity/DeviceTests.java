@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-//@ActiveProfiles("local")
+@ActiveProfiles("dev")
 //@ComponentScan(basePackages = "com.ge.hc.healthlink.repository")
 public class DeviceTests {
 
@@ -37,21 +38,21 @@ public class DeviceTests {
     public void saveDeviceCategory() {
         DeviceCategory category = new DeviceCategory();
         category.setName("category_4_84F3EB77F175");
-        category.setPowerOffElectricCurrentStart(20d);
+        category.setPowerOffElectricCurrentStart(40d);
         category.setPowerOffElectricCurrentEnd(-20d);
-        category.setPowerOnElectricCurrentStart(30d);
-        category.setPowerOnElectricCurrentEnd(30d);
-        category.setStandByElectricCurrentStart(100d);
+        category.setPowerOnElectricCurrentStart(20d);
+        category.setPowerOnElectricCurrentEnd(20d);
+        category.setStandByElectricCurrentStart(200d);
         category.setStandByElectricCurrentEnd(120d);
-        category.setInUseElectricCurrentStart(130d);
-        category.setInUseElectricCurrentEnd(400d);
+        category.setInUseElectricCurrentStart(41d);
+        category.setInUseElectricCurrentEnd(180d);
         categoryRepository.save(category);
     }
 
     @Test
     public void saveDevice() {
         Device d1 = new Device();
-        d1.setDeviceCategoryUuid("b77081e5-9f3c-4094-a3f3-00d2ea04df3d");
+        d1.setDeviceCategoryUuid("e566e822-7af6-4bda-bb3a-a55c3ce6b83a");
         d1.setIotId("84F3EB77F175");
         d1.setCreatedTime(LocalDateTime.now());
         d1.setName("device3");

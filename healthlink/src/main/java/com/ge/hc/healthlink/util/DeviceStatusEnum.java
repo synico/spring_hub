@@ -1,6 +1,5 @@
 package com.ge.hc.healthlink.util;
 
-import com.ge.hc.healthlink.entity.DeviceStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +23,12 @@ public enum DeviceStatusEnum {
     /**
      *
      */
-    RUNNING(3);
+    RUNNING(3),
+
+    /**
+     *
+     */
+    UNKNOWN(4);
 
     @Getter
     @Setter
