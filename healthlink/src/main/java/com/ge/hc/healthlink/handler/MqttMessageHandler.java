@@ -38,7 +38,7 @@ public class MqttMessageHandler implements MessageHandler {
     @Override
     public void handleMessage(Message<?> message) throws MessagingException {
         MessageHeaders headers = message.getHeaders();
-        LOGGER.info("topic: " + headers.get("mqtt_receivedTopic") + "####" + message.getPayload());
+        LOGGER.info("topic: " + headers.get("mqtt_receivedTopic") + "   " + message.getPayload());
         String msgTopic = headers.get("mqtt_receivedTopic").toString();
         String msgPayload = message.getPayload().toString();
         HealthLinkTopicsEnum topic = HealthLinkTopicsEnum.getTopicByName(msgTopic);
@@ -56,7 +56,7 @@ public class MqttMessageHandler implements MessageHandler {
                 heartbeatTransformer.transform(msgPayload);
                 break;
             default:
-                LOGGER.info("msg: " + msgPayload);
+                LOGGER.info("msg: " + msgPayload + " won't be transformed and saved");
 
         }
     }
