@@ -71,8 +71,10 @@ public class HealthlinkApplication {
 
 	@Bean
 	public MessageProducerSupport mqttInboundHandler() {
+		String clientId = mqttConfig.getClientId();
+		LOGGER.info("clientId: " + clientId);
 		MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter(
-				"healthlinkMsgConsumer_" + mqttConfig.getClientId(),
+				"HL_" + clientId.substring(clientId.length() - 4),
 				mqttClientFactory());
 		adapter.addTopic(topicConfig.getCurrent());
 		adapter.addTopic(topicConfig.getLink());

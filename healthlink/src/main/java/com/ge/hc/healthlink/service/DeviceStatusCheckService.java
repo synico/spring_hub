@@ -45,9 +45,9 @@ public class DeviceStatusCheckService {
     private ElectricityHeartbeatRepository heartbeatRepository;
 
     private Device findDeviceByAssetMAC(String assetMAC) {
-        LOGGER.debug("assetMAC: " + assetMAC);
+        LOGGER.debug("-asset_mac: " + assetMAC);
         Device device = deviceRepository.findByIotId(assetMAC);
-        LOGGER.info("assetMAC: " + assetMAC + ", deviceCategoryUid: " + (device != null ? device.getDeviceCategoryUuid() : "empty"));
+        LOGGER.info("-asset_mac: " + assetMAC + ", device_category_uid: " + (device != null ? device.getDeviceCategoryUuid() : "empty"));
         return device;
     }
 
@@ -83,7 +83,7 @@ public class DeviceStatusCheckService {
     }
 
     private DeviceStatusEnum updateDeviceStatus(DeviceStatusEnum toStatus, HeartbeatKey hbKey) {
-        LOGGER.info("Update device [" + hbKey.getAssetMAC() + "] status to: " + toStatus.name());
+        LOGGER.info("* UPDATE DEVICE [" + hbKey.getAssetMAC() + "] STATUS TO: " + toStatus.name());
         DeviceStatus status = new DeviceStatus();
         status.setHeartbeatKey(hbKey);
         status.setStatus(Integer.toString(toStatus.getStatusCode()));
@@ -140,12 +140,13 @@ public class DeviceStatusCheckService {
             String assetMAC = heartbeat.getHeartbeatKey().getAssetMAC();
             Device device = this.findDeviceByAssetMAC(assetMAC);
             if(device == null) {
-                LOGGER.info("No device was found by MAC: " + assetMAC);
+                LOGGER.debug("no device was found by MAC: " + assetMAC);
             } else {
                 DeviceCategory category = this.findCategoryByDevice(device);
                 if(category == null) {
-                    LOGGER.info("No device category was found by device[MAC]: " + assetMAC);
+                    LOGGER.debug("no device category was found by device[MAC]: " + assetMAC);
                 } else {
+                    LOGGER.debug("device category is found by device[MAC]: " + assetMAC);
                     // Retrieve heartbeat from previous message
                     ElectricityHeartbeat previousHeartbeat = this.getPreviousHeartbeat(assetMAC);
                     if(previousHeartbeat != null) {
@@ -174,8 +175,6 @@ public class DeviceStatusCheckService {
                                 } else if(isDeviceRunning(category, current)) {
                                     // update device status to RUNNING
                                     previousStatus = updateDeviceStatus(DeviceStatusEnum.RUNNING, current.getHeartbeatKey());
-                                } else {
-                                    // do nothing
                                 }
                                 break;
                             case STANDBY:
