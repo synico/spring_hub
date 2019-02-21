@@ -37,14 +37,14 @@ public class DeviceTests {
     @Test
     public void saveDeviceCategory() {
         DeviceCategory category = new DeviceCategory();
-        category.setName("category_4_84F3EB77F175");
-        category.setPowerOffElectricCurrentStart(40d);
-        category.setPowerOffElectricCurrentEnd(-20d);
-        category.setPowerOnElectricCurrentStart(20d);
-        category.setPowerOnElectricCurrentEnd(20d);
+        category.setName("category_4_807D3A696D93");
+        category.setPowerOffElectricCurrentStart(-10d);
+        category.setPowerOffElectricCurrentEnd(46d);
+        category.setPowerOnElectricCurrentStart(25d);
+        category.setPowerOnElectricCurrentEnd(25d);
         category.setStandByElectricCurrentStart(200d);
         category.setStandByElectricCurrentEnd(120d);
-        category.setInUseElectricCurrentStart(41d);
+        category.setInUseElectricCurrentStart(90d);
         category.setInUseElectricCurrentEnd(180d);
         categoryRepository.save(category);
     }

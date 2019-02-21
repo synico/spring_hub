@@ -93,6 +93,10 @@ public class DeviceStatusCheckService {
     }
 
     private boolean isDeviceStandby(DeviceCategory category, ElectricityHeartbeat hb) {
+        if(category.getStandByElectricCurrentStart() == null || category.getStandByElectricCurrentEnd() == null) {
+            return false;
+        }
+
         if(hb.getElectricity() > category.getStandByElectricCurrentStart() &&
             hb.getElectricity() < category.getStandByElectricCurrentEnd()) {
             return true;
@@ -102,6 +106,10 @@ public class DeviceStatusCheckService {
     }
 
     private boolean isDeviceRunning(DeviceCategory category, ElectricityHeartbeat hb) {
+        if(category.getInUseElectricCurrentStart() == null || category.getInUseElectricCurrentEnd() == null) {
+            return false;
+        }
+
         if(hb.getElectricity() > category.getInUseElectricCurrentStart() &&
             hb.getElectricity() < category.getInUseElectricCurrentEnd()) {
             return true;
@@ -111,6 +119,10 @@ public class DeviceStatusCheckService {
     }
 
     private boolean isDevicePowerOn(DeviceCategory category, ElectricityHeartbeat previousHeartbeat, ElectricityHeartbeat currentHeartbeat) {
+        if(category.getPowerOnElectricCurrentStart() == null) {
+            return false;
+        }
+
         int diff = currentHeartbeat.getElectricity() - previousHeartbeat.getElectricity();
         if(diff >= category.getPowerOnElectricCurrentStart()) {
             return true;
@@ -120,6 +132,9 @@ public class DeviceStatusCheckService {
     }
 
     private boolean isDevicePowerOff(DeviceCategory category, LinkedList<ElectricityHeartbeat> msgEntities, int index) {
+        if(category.getPowerOffElectricCurrentEnd() == null) {
+            return false;
+        }
         ElectricityHeartbeat current = msgEntities.get(index);
         if(current.getElectricity() < category.getPowerOffElectricCurrentEnd()) {
             return true;

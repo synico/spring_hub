@@ -21,7 +21,7 @@
         <appender-ref ref="file" />
     </root>
     
-    <logger name = "com.ge.hc" level = "info" additivity = "false">
+    <logger name = "com.ge.hc" level = "debug" additivity = "false">
         <appender-ref ref="console"/>
     </logger>
 </configuration>
