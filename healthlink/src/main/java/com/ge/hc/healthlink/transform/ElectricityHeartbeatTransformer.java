@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.transformer.GenericTransformer;
 import org.springframework.stereotype.Component;
 
+import java.time.ZonedDateTime;
 import java.util.LinkedList;
 
 @Component
@@ -32,7 +33,14 @@ public class ElectricityHeartbeatTransformer implements GenericTransformer<Strin
             String infos[] = source.split("\\|");
             String status = infos[0].trim();
             String assetMAC = infos[1].trim();
+
             Integer eventBeginDate = Integer.parseInt(infos[2].trim()) - 3 * 60 * 60;
+            Long nowClientDate = ZonedDateTime.now().toEpochSecond();
+            if(nowClientDate - eventBeginDate > 360) {
+                LOGGER.info("### Synchronize event begin date");
+                eventBeginDate = nowClientDate.intValue() - infos.length;
+            }
+
             msgEntities = new LinkedList<>();
             ElectricityHeartbeat heartbeat = null;
             HeartbeatKey heartbeatKey = null;
