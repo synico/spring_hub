@@ -10,23 +10,14 @@ import javax.persistence.*;
 @Data
 public class LinkMessage {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    @Column(name = "message_id", columnDefinition = "VARCHAR(32)")
-    private String id;
-
-    @Column(name = "asset_mac", columnDefinition = "VARCHAR(16)")
-    private String assetMAC;
+    @EmbeddedId
+    private HeartbeatKey heartbeatKey;
 
     @Column(name = "app_version", columnDefinition = "VARCHAR(8)")
     private String appVersion;
 
     @Column(name = "asset_ip_address", columnDefinition = "VARCHAR(16)")
     private String assetIP;
-
-    @Column(name = "event_date")
-    private Integer eventDate;
 
     @Column(name = "ap_ssid_name", columnDefinition = "VARCHAR(64)")
     private String apSSID;
@@ -37,10 +28,12 @@ public class LinkMessage {
     public LinkMessage convertMsg2Entity(String msg) {
         String infos[] = msg.split("\\|");
         if(infos.length == 7) {
-            this.setAssetMAC(infos[1]);
+            HeartbeatKey heartbeatKey = new HeartbeatKey();
+            heartbeatKey.setAssetMAC(infos[1]);
+            heartbeatKey.setEventDate(Integer.parseInt(infos[4]) - 3 * 60 * 60);
+            this.setHeartbeatKey(heartbeatKey);
             this.setAppVersion(infos[2]);
             this.setAssetIP(infos[3]);
-            this.setEventDate(Integer.parseInt(infos[4]) - 3 * 60 * 60);
             this.setApSSID(infos[5]);
             this.setApMAC(infos[6].replace(":", ""));
         }
