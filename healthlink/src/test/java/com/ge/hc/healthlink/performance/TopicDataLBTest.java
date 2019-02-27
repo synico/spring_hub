@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class TopicDataLBTest {
@@ -34,22 +37,41 @@ public class TopicDataLBTest {
         LOGGER.info("x" + mqttConfig.getClientId());
     }
 
+    private AtomicInteger theId = new AtomicInteger(0);
+
     @Test
-    public void testMqttConn() {
+    public void testMqttConn() throws InterruptedException{
         String serverURI = brokerServerConfig.getHostname() + ":" + brokerServerConfig.getPort();
         String clientId = mqttConfig.getClientId();
         LOGGER.info("\n" +
                 "" +
                 " serverURI: " + serverURI + "\n clientId: " + clientId);
         MqttConnectOptions connectOptions = this.createConnOptions();
+
+        int N = 500;
+
+        CountDownLatch startGate = new CountDownLatch(1);
+        CountDownLatch endGate = new CountDownLatch(N);
+
         long epochTime = 1551166854;
-        for(int i = 0; i < 200; i++) {
-            this.sendMessageById(connectOptions, clientId, epochTime, i);
+        for(int i = 0; i < N; i++) {
+            new Thread(() -> {
+                try {
+                    startGate.await();
+                } catch (InterruptedException ex) {
+                    LOGGER.info(ex.getMessage());
+                }
+
+                this.sendMessageById(connectOptions, clientId, epochTime);
+            }).start();
+            LOGGER.info("sending message");
         }
+        startGate.countDown();
     }
 
-    private void sendMessageById(MqttConnectOptions connectOptions, String clientId, long epochTime, int id) {
+    private void sendMessageById(MqttConnectOptions connectOptions, String clientId, long epochTime) {
         try {
+            int id = theId.getAndAdd(1);
             String paddedId = this.createId(id);
             MqttClient client = this.createMqttClient(clientId + paddedId);
             client.connect(connectOptions);
