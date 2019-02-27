@@ -18,7 +18,7 @@ public class LinkMsgTransformer implements GenericTransformer<String, String> {
 
     @Override
     public String transform(String msg) {
-        LOGGER.debug("msg: " + msg);
+        LOGGER.info("Link message: " + msg);
         LinkMessage msgEntity = new LinkMessage();
         linkMessageRepository.save(msgEntity.convertMsg2Entity(msg));
         return msg;

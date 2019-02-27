@@ -47,7 +47,7 @@ public class DeviceStatusCheckService {
     private Device findDeviceByAssetMAC(String assetMAC) {
         LOGGER.debug("-asset_mac: " + assetMAC);
         Device device = deviceRepository.findByIotId(assetMAC);
-        LOGGER.info("-asset_mac: " + assetMAC + ", device_category_uid: " + (device != null ? device.getDeviceCategoryUuid() : "empty"));
+        LOGGER.debug("-asset_mac: " + assetMAC + ", device_category_uid: " + (device != null ? device.getDeviceCategoryUuid() : "empty"));
         return device;
     }
 

@@ -27,17 +27,17 @@ public class ElectricityHeartbeatTransformer implements GenericTransformer<Strin
 
     @Override
     public String transform(String source) {
-        LOGGER.debug("msg: " + source);
+        LOGGER.debug("Heartbeat message: " + source);
         LinkedList<ElectricityHeartbeat> msgEntities = null;
-        if(StringUtils.isNotBlank(source)) {
-            String infos[] = source.split("\\|");
+        if(validateMessage(source)) {
+            String[] infos = source.split("\\|");
             String status = infos[0].trim();
             String assetMAC = infos[1].trim();
 
             Integer eventBeginDate = Integer.parseInt(infos[2].trim()) - 3 * 60 * 60;
             Long nowClientDate = ZonedDateTime.now().toEpochSecond();
             if(nowClientDate - eventBeginDate > 360) {
-                LOGGER.info("### Synchronize event begin date");
+                LOGGER.info("### Synchronize begin date of event");
                 eventBeginDate = nowClientDate.intValue() - infos.length;
             }
 
@@ -52,18 +52,30 @@ public class ElectricityHeartbeatTransformer implements GenericTransformer<Strin
                 heartbeat = new ElectricityHeartbeat();
                 heartbeat.setHeartbeatKey(heartbeatKey);
                 heartbeat.setStatus(status);
-//                heartbeat.setAssetMAC(assetMAC);
-//                heartbeat.setEventDate(eventBeginDate);
                 eventBeginDate += 1;
                 heartbeat.setElectricity(Integer.parseInt(infos[i].trim()));
                 msgEntities.add(heartbeat);
             }
-            if(infos.length != 23 || msgEntities.size() != 20) {
-                LOGGER.info("ERROR: " + source);
-            }
+
             heartbeatRepository.saveAll(msgEntities);
             deviceStatusCheckService.checkDeviceStatus(msgEntities);
         }
         return source;
     }
+
+    private boolean validateMessage(String msg) {
+        boolean isValid = true;
+        if(StringUtils.isBlank(msg)) {
+            isValid = false;
+            LOGGER.debug("blank message");
+        } else {
+            String[] items = msg.split("\\|");
+            if(items.length < 4) {
+                isValid = false;
+                LOGGER.debug("invalid message format, payload: " + msg);
+            }
+        }
+        return isValid;
+    }
+
 }

@@ -3,12 +3,7 @@ package com.ge.hc.healthlink;
 import com.ge.hc.healthlink.config.HealthLinkBrokerServerConfig;
 import com.ge.hc.healthlink.config.HealthLinkMqttConfig;
 import com.ge.hc.healthlink.config.HealthLinkTopicConfig;
-import com.ge.hc.healthlink.entity.ElectricityMessage;
 import com.ge.hc.healthlink.handler.MqttMessageHandler;
-import com.ge.hc.healthlink.repository.ElectricityMessageRepository;
-import com.ge.hc.healthlink.transform.ElectricityMsgTransformer;
-import com.ge.hc.healthlink.transform.LinkMsgTransformer;
-import com.ge.hc.healthlink.transform.PowerStatusMsgTransformer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -19,12 +14,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.endpoint.MessageProducerSupport;
-import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 //@EnableScheduling
 @SpringBootApplication
