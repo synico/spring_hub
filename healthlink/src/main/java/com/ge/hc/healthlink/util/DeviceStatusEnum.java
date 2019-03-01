@@ -8,12 +8,12 @@ public enum DeviceStatusEnum {
     /**
      *
      */
-    POWERON(0),
+    POWERON(1),
 
     /**
      *
      */
-    POWEROFF(1),
+    POWEROFF(0),
 
     /**
      *
@@ -28,7 +28,7 @@ public enum DeviceStatusEnum {
     /**
      *
      */
-    UNKNOWN(4);
+    UNKNOWN(-1);
 
     @Getter
     @Setter
