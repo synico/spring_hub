@@ -13,6 +13,10 @@ public class MyApplicationListener implements ApplicationListener {
 
     private static final Logger log = LoggerFactory.getLogger(MyApplicationListener.class);
 
+    public MyApplicationListener() {
+        log.info("constructor of MyApplicationListener");
+    }
+
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
         log.info("Event name: " + event.getClass().getName());
