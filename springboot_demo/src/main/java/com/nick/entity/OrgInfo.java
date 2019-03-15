@@ -2,14 +2,16 @@ package com.nick.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author nick.liu
  */
+@NamedEntityGraph(
+    name = "orgInfo.detail"
+//    attributeNodes = {@NamedAttributeNode("userAccounts")}
+)
 @Data
 @Entity
 @Table(name = "org_info")
@@ -36,4 +38,7 @@ public class OrgInfo {
 
     @Column(name = "short_name")
     private String shortName;
+
+    @OneToMany(mappedBy = "hospitalId")
+    private List<UserAccount> userAccounts;
 }

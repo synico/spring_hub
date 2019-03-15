@@ -23,6 +23,9 @@ public class UserAccount {
     @Column(name = "login_name")
     private String loginName;
 
+    @Column(name = "hospital_id")
+    private Integer hospitalId;
+
     @Column(name = "hospital_uid")
     private String hospitalUid;
 
