@@ -1,0 +1,36 @@
+server:
+    port: 9000
+
+spring:
+    http:
+        encoding:
+            charset: UTF-8
+            force: true
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                connection:
+                    charSet: UTF-8
+                    useUnicode: true
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                temp:
+                    use_jdbc_metadata_defaults: false
+
+camel:
+    springboot:
+        main-run-controller: true
+        xmlRoutes: classpath:camel/*.xml
+
+custom:
+    datasource:
+        primary:
+            url: jdbc:postgresql://localhost:54321/ge_cpm
+            driverClassName: org.postgresql.Driver
+            username: postgres
+            password: root
+            max-active: 20
+            max-idle: 8
+            min-idle: 8
+            initial-size: 10

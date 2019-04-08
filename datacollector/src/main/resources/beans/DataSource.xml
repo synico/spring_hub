@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <!--<bean id="risDB" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+        <property name="url" value="jdbc:sqlserver://risdb.ruijin.com:1433;databaseName=RIS_BASIC;ApplicationIntent=ReadOnly" />
+        <property name="username" value="GE_Login" />
+        <property name="password" value="GE_Login" />
+    </bean>-->
+    <bean id="risDB" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:54321/ris_db" />
+        <property name="username" value="postgres" />
+        <property name="password" value="root" />
+    </bean>
+    <bean id="risSqlComponent" class="org.apache.camel.component.sql.SqlComponent">
+        <property name="dataSource">
+            <ref bean="risDB"/>
+        </property>
+    </bean>
+
+    <!--<bean id="reqDB" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+        <property name="url" value="jdbc:sqlserver://exreq.ruijin.com:1433;databaseName=RequestDB;ApplicationIntent=ReadOnly" />
+        <property name="username" value="GE_Login" />
+        <property name="password" value="GE_Login" />
+    </bean>-->
+    <bean id="reqDB" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:54321/req_db" />
+        <property name="username" value="postgres" />
+        <property name="password" value="root" />
+    </bean>
+    <bean id="reqSqlComponent" class="org.apache.camel.component.sql.SqlComponent">
+        <property name="dataSource">
+            <ref bean="reqDB"/>
+        </property>
+    </bean>
+</beans>
