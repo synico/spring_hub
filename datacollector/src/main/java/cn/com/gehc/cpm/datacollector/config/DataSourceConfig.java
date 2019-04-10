@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ImportResource(locations = {"beans/*.xml"})
+public class DataSourceConfig {
 
     @Autowired
     private Environment env;
