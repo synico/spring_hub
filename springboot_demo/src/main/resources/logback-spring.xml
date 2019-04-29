@@ -13,7 +13,7 @@
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
-        <file>/tmp/springboot_demo-${bySecond}.log</file>
+        <file>C:\Users\212706300\data\springboot_demo-${bySecond}.log</file>
         <append>true</append>
     </appender>
     <root level="INFO">

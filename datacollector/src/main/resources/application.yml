@@ -26,7 +26,7 @@ camel:
 custom:
     datasource:
         primary:
-            url: jdbc:postgresql://localhost:54322/rcc_cpm_v2
+            url: jdbc:postgresql://localhost:54321/rcc_cpm_v1
             driverClassName: org.postgresql.Driver
             username: postgres
             password: root
