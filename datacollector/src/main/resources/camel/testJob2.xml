@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <routes xmlns="http://camel.apache.org/schema/spring">
     <route id="testCamelPullJob2">
-        <from uri="timer://PullData?fixedRate=false&amp;period=5000&amp;delay=20000"/>
+        <from uri="timer://PullData?fixedRate=false&amp;period=5s&amp;delay=20s"/>
         <setHeader headerName="JobName">
             <constant>testCamelPullJob2</constant>
         </setHeader>
