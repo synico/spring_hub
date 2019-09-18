@@ -3,3 +3,14 @@ camel:
         main-run-controller: true
         xmlRoutes: classpath:camel/*.xml
 
+custom:
+    datasource:
+        primary:
+            url: jdbc:postgresql://localhost:54321/rcc_cpm_v1
+            driverClassName: org.postgresql.Driver
+            username: postgres
+            password: root
+            max-active: 20
+            max-idle: 8
+            min-idle: 8
+            initial-size: 10
