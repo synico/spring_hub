@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <routes xmlns="http://camel.apache.org/schema/spring">
     <route id="testCamelPullJob1">
-        <from uri="timer://PullData?fixedRate=true&amp;period=5000&amp;delay=20000"/>
+        <from uri="timer://PullData?fixedRate=true&amp;period=3s&amp;delay=1s"/>
         <setHeader headerName="JobName">
             <constant>testCamelPullJob1</constant>
         </setHeader>
         <bean ref="pullDataJob1" method="pullData"/>
+        <to uri="sql:select * from study order by DT_LAST_UPDATE asc?dataSource=dwDB"/>
+        <to uri="log:row"/>
+        <bean ref="pullDataJob1" method="printRow"/>
     </route>
 </routes>

@@ -38,7 +38,7 @@ public enum DeviceStatusEnum {
         this.statusCode = statusCode;
     }
 
-    public static DeviceStatusEnum getStatusByCode(int statusCode) {
+    public DeviceStatusEnum getStatusByCode(int statusCode) {
         DeviceStatusEnum statusEnum = POWERON;
         for(DeviceStatusEnum status : values()) {
             if(status.getStatusCode() == statusCode) {

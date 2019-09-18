@@ -10,8 +10,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
-@Configuration
-@ImportResource(locations = {"beans/*.xml"})
+//@Configuration
+//@ImportResource(locations = {"beans/*.xml"})
 public class DataSourceConfig {
 
     @Autowired
