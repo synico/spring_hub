@@ -13,10 +13,10 @@
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
-        <file>C:\Users\212706300\data\springboot_demo-${bySecond}.log</file>
+        <file>springboot_demo-${bySecond}.log</file>
         <append>true</append>
     </appender>
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="console"/>
         <appender-ref ref="file" />
     </root>
