@@ -17,7 +17,7 @@ public class MyAppRunner implements ApplicationRunner {
      * @throws Exception on error
      */
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-        log.info("run MyAppRunner..................");
+    public void run(ApplicationArguments args) {
+        log.debug("run MyAppRunner..................");
     }
 }

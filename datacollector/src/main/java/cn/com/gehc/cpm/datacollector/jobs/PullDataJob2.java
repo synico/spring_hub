@@ -12,7 +12,7 @@ public class PullDataJob2 {
 
     private static final Logger log = LoggerFactory.getLogger(PullDataJob2.class);
 
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd hh:mm:ss");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd hh:mm:ss");
 
     public void pullData() {
         LocalDateTime now = LocalDateTime.now();

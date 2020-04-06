@@ -15,13 +15,10 @@ import java.time.LocalDate;
 public class UserAccountSpecs {
 
     public static Specification<UserAccount> isLoginThisWeek() {
-        return new Specification<UserAccount>() {
-            @Override
-            public Predicate toPredicate(Root<UserAccount> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                LocalDate date = LocalDate.now().minusWeeks(5);
+        return (Specification<UserAccount>) (root, query, criteriaBuilder) -> {
+            LocalDate date = LocalDate.now().minusWeeks(5);
 //                return criteriaBuilder.lessThan(root.get(_UserAccount.lastLoginTime), date);
-                return null;
-            }
+            return null;
         };
     }
 }

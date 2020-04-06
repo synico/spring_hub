@@ -16,7 +16,7 @@ public class PullDataJob1 {
 
     private static final Logger log = LoggerFactory.getLogger(PullDataJob1.class);
 
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd hh:mm:ss");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd hh:mm:ss");
 
     public void pullData() {
         LocalDateTime now = LocalDateTime.now();
@@ -31,7 +31,7 @@ public class PullDataJob1 {
     }
 
     public void printRow(@Headers Map<String, Object> headers, @Body Object body) {
-        List<Map<String, Object>> studys = (List<Map<String, Object>>) body;
+        List<Map<String, List<String>>> studys = (List<Map<String, List<String>>>) body;
         System.out.println("stets");
     }
 

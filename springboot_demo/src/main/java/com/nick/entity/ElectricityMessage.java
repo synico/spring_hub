@@ -41,7 +41,7 @@ public class ElectricityMessage {
     private String eventTimestamp;
 
     public ElectricityMessage convertMsg2Entity(String theMsg) {
-        String infos [] = theMsg.split("\\|");
+        String[] infos = theMsg.split("\\|");
         if(infos.length == 6) {
             this.setStatus(infos[0]);
             this.setAssetMAC(infos[1].trim());

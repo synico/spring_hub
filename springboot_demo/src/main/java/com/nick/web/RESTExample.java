@@ -49,7 +49,7 @@ public class RESTExample {
             }
         }
 
-        Optional<OrgInfo> orgInfoOptional = null;
+        Optional<OrgInfo> orgInfoOptional;
         if(false) {
             orgInfoOptional = orgInfoService.findOrgInfoByUid("951934d0515243ab993b958a0b41b72f");
             if(orgInfoOptional.isPresent()) {

@@ -11,6 +11,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 
 //@Configuration
 //@EnableJpaRepositories(entityManagerFactoryRef = "devEntityManagerFactory", transactionManagerRef = "devTransactionManager")
@@ -33,7 +34,7 @@ public class DevDBConfig {
 
 //    @Bean
     public PlatformTransactionManager devTransactionManager() {
-        return new JpaTransactionManager(devEntityManagerFactory().getObject());
+        return new JpaTransactionManager(Objects.requireNonNull(devEntityManagerFactory().getObject()));
     }
 
 //    @Bean

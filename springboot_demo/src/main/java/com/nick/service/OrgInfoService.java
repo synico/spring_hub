@@ -26,8 +26,7 @@ public class OrgInfoService {
     private OrgInfoRepository orgInfoRepository;
 
     public List<OrgInfo> findOrgByUid(String uid) {
-        List<OrgInfo> orgInfoList = orgInfoRepository.findByUid(uid);
-        return orgInfoList;
+        return orgInfoRepository.findByUid(uid);
     }
 
     public Optional<OrgInfo> findOrgInfoByUid(String uid) {
@@ -41,8 +40,7 @@ public class OrgInfoService {
 
         Example<OrgInfo> example = Example.of(orgInfo, matcher);
 
-        Optional<OrgInfo> result = orgInfoRepository.findOne(example);
-        return result;
+        return orgInfoRepository.findOne(example);
     }
 
 }
