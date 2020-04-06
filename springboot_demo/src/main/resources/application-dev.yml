@@ -3,9 +3,9 @@ spring:
     name: springboot_demo
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:54321/ge_apm
+    url: jdbc:postgresql://localhost:54321/cpm_rcc
     username: postgres
-    password: root
+    password: GehcDi9it@l
   devtools:
     restart:
       enabled: true
@@ -22,4 +22,10 @@ spring:
     exclude:
 
 server:
-  port: 9000
+  port: ${random.int[8000,9000]}
+
+mangement:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
